@@ -61,9 +61,9 @@ minimum height=2em]
 
     \path[uses] (Main) -- node[above] {FXML}(Controller);
     \path[inherits] (Controller) -- (Display);
-    \path[uses] (Main) -- (Generator);
+    \path[uses] (Main) -- node[right] {new thread}(Generator);
     \path[uses] (Generator) -- node[right] {onGenerationComplete}(Solver);
-    \path[uses] (Generator) -| (Display);
+    \path[uses] (Generator) -| node[right] {thread-safe operation}(Display);
     \path[uses] (Solver) -| (Display);
     \path[uses] (Generator) -- (Maze);
     \path[uses] (Solver) -- (Maze);
@@ -77,7 +77,8 @@ minimum height=2em]
     \item All maze generation and solving algorithms will extend off of Generator and Solver respectively,
     \item The method of Display to update it \textbf{must} be thread-safe/atomic, as several different threads may be calling it
           at the same time.
-    \item The maze will be stored as a graph of cells, each node being linked to 4 other cells (right, down, left, up).
+    \item The maze will be stored as a graph of cells, each node being linked via edges to 4 other nodes
+    \item Each edge of the maze graph will be marked as a wall or not a wall.
 \end{itemize}
 
 
