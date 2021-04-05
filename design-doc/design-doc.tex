@@ -1,0 +1,85 @@
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage{siunitx} \input{common/moreunits} \usepackage{amsmath} % to get: {align} {alignat} \usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{enumitem} % to specify enumeration format
+\usepackage{multicol} % for lists in two columns
+\usepackage{tikz}
+\usetikzlibrary{arrows, shapes}
+\usetikzlibrary{arrows.meta}
+\graphicspath{ {./images/} }
+
+\setlength{\parskip}{1em}
+
+% some values in this file should be overwritten by the lines below
+\input{common/defines} 
+%%                       START HERE
+%%
+%% THIS NEEDS TO BE HERE AND SET PROPERLY
+%% THE VERSION IN COMMON HEADERS WILL LOOK THE SAME AS THIS
+%% =========================================================
+\renewcommand{\theauthor}{Christopher Medlin, Will DeBernardi}
+\renewcommand{\theemail}{cmedlin@unm.edu, wdebernardi@unm.edu}
+\renewcommand{\coursecode}{CS 351L}
+\renewcommand{\coursename}{Design of Large Programs}
+\renewcommand{\thetitle}{Project 3 Design}
+\renewcommand{\theduedate}{04 Apr 2021}
+%% ==========================================================
+\input{common/header}
+\begin{document}
+\thispagestyle{empty}
+\input{common/title}
+
+%% DOCUMENT CONTENT STARTS HERE
+%% ===========================================================
+
+\tikzset{line width=10pt}
+\tikzstyle{class} = [rectangle, draw,
+text width=5em, text centered, rounded corners, minimum height=2em,
+node distance=4cm, minimum width=7em]
+\tikzstyle{object} = [rectangle, draw,
+text width=5em, text centered, minimum height=3em,
+node distance=4cm, minimum width=7em]
+\tikzstyle{procedure} = [ellipse, draw, node distance=3cm,
+minimum height=2em]
+\tikzstyle{uses} = [draw, -{Latex[width=5pt, length=5pt]}]
+\tikzstyle{inherits} = [draw, -{Triangle[open, width=8pt, length=8pt]}]
+\tikzstyle{hasa} = [draw, -{Diamond[open, width=6pt, length=8pt]}]
+\usetikzlibrary{positioning}
+
+\section{Main Diagram}
+\begin{center}
+\begin{tikzpicture}
+    \node[class] (Main) {Main};
+    \node[object, right of=Main] (Controller) {Controller};
+    \node[object, below of=Main] (Generator) {Generator};
+    \node[object, below of=Generator] (Solver) {Solver};
+    \node[class, right of=Controller] (Display) {Display};
+    \node[object, left of=Generator] (Maze) {Maze};
+    \node[object, below of=Maze] (Cell) {Cell};
+
+    \path[uses] (Main) -- node[above] {FXML}(Controller);
+    \path[inherits] (Controller) -- (Display);
+    \path[uses] (Main) -- node[right] {new thread}(Generator);
+    \path[uses] (Generator) -- node[right] {onGenerationComplete}(Solver);
+    \path[uses] (Generator) -| node[right] {thread-safe operation}(Display);
+    \path[uses] (Solver) -| (Display);
+    \path[uses] (Generator) -- (Maze);
+    \path[uses] (Solver) -- (Maze);
+    \path[uses] (Maze) -- (Cell);
+    \path[uses] (Cell) edge [loop below] node[below] {graph}(Cell);
+\end{tikzpicture}
+\end{center}
+
+\section{Notes}
+\begin{itemize}
+    \item All maze generation and solving algorithms will extend off of Generator and Solver respectively,
+    \item The method of Display to update it \textbf{must} be thread-safe/atomic, as several different threads may be calling it
+          at the same time.
+    \item The maze will be stored as a graph of cells, each node being linked via edges to 4 other nodes
+    \item Each edge of the maze graph will be marked as a wall or not a wall.
+\end{itemize}
+
+
+\end{document}
