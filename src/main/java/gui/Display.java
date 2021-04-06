@@ -5,7 +5,7 @@
  * thread-safe, as maze generation and solving occur on (potentially several)
  * different threads.
  *
- * @author Christopher Medlin
+ * @author Christopher Medlin, Will DeBernardi
  * @date 06 Apr 2021
  */
 package gui;

@@ -4,7 +4,7 @@
  * FXML is probably unnecessary, but perhaps additional features will be added
  * in the future.
  *
- * @author Christopher Medlin
+ * @author Christopher Medlin, Will DeBernardi
  */
 package gui;
 
