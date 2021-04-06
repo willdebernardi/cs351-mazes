@@ -1,3 +1,5 @@
+package maze;
+
 public class Edge {
     private Vertex start, end;
     private MazeState state;

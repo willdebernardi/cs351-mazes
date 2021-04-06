@@ -1,3 +1,5 @@
+package maze;
+
 import java.util.ArrayList;
 import java.util.List;
 
