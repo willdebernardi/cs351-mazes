@@ -12,9 +12,8 @@ public class Vertex {
         edges = new HashMap<>();
     }
 
-    public HashMap<Direction, Edge> addEdge(Vertex endVertex, MazeState state, Direction direction) {
+    public void addEdge(Vertex endVertex, MazeState state, Direction direction) {
         edges.put(direction, new Edge(this, endVertex, state));
-        return edges;
     }
 
     public Collection<Edge> getEdges() {
