@@ -22,4 +22,15 @@ public class Vertex {
         return edges.values();
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public Edge getEdge(Direction d) {
+        return edges.get(d);
+    }
 }

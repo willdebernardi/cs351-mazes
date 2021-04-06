@@ -4,6 +4,9 @@
  * It is an unenforced rule that methods overridden from this interface must be
  * thread-safe, as maze generation and solving occur on (potentially several)
  * different threads.
+ *
+ * @author Christopher Medlin
+ * @date 06 Apr 2021
  */
 package gui;
 
