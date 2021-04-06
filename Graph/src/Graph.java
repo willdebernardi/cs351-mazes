@@ -1,40 +1,19 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Graph {
-    private Map<Vertex, List<Vertex>> adjVertices;
+    private  ArrayList<Vertex> vertices;
 
     public Graph() {
-        this.adjVertices = new HashMap<>();
+        this.vertices = new ArrayList<>();
     }
 
-    public void addVertex(MazeState state) {
-        adjVertices.putIfAbsent(new Vertex(state), new ArrayList<>());
+    public void addVertex(Vertex vertex) {
+        vertices.add(vertex);
     }
 
-    public void addEdge(MazeState stateOne, MazeState stateTwo) {
-        Vertex vertexOne = new Vertex(stateOne);
-        Vertex vertexTwo = new Vertex(stateTwo);
-        adjVertices.get(vertexOne).add(vertexTwo);
-        adjVertices.get(vertexTwo).add(vertexOne);
+    public void addEdge(Vertex v1, Vertex v2, MazeState state, Direction direction) {
+        v1.addEdge(v2, state, direction);
+        v2.addEdge(v1, state, direction);
     }
 
-    public void removeEdge(MazeState stateOne, MazeState stateTwo) {
-        Vertex vertexOne = new Vertex(stateOne);
-        Vertex vertexTwo = new Vertex(stateTwo);
-        List<Vertex> listOne = adjVertices.get(vertexOne);
-        List<Vertex> listTwo = adjVertices.get(vertexTwo);
-        if(listOne != null) {
-            listOne.remove(vertexTwo);
-        }
-        if(listTwo != null) {
-            listTwo.remove(vertexOne);
-        }
-    }
-
-    List<Vertex> getAdjVertcies(MazeState state) {
-        return adjVertices.get(new Vertex(state));
-    }
 }
