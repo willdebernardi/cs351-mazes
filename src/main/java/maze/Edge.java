@@ -25,4 +25,8 @@ public class Edge {
     public boolean isWall() {
         return this.state == MazeState.WALL || this.state == MazeState.BOUNDARY;
     }
+
+    public void setState(MazeState state) {
+        this.state = state;
+    }
 }
