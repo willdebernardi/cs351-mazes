@@ -22,7 +22,7 @@ public interface Display {
      *              will be drawn on the GUI, using the coordinates stored in
      *              the Vertex object
      */
-    void cellChanged(Vertex... cells);
+    void cellsChanged(Vertex... cells);
 
     /**
      * Called by a maze solver when its location in the maze has changed.

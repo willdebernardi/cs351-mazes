@@ -11,5 +11,5 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="gui.Controller"
             prefHeight="400.0" prefWidth="600.0">
-    <Canvas fx:id="canvas"/>
+    <Canvas fx:id="canvas" width="1000" height="1000"/>
 </AnchorPane>
