@@ -24,7 +24,7 @@ public class Maze {
                 if(i == 0) {
                     vertex.addEdge(null, MazeState.BOUNDARY, Direction.UP);
                 } else {
-                    Vertex upVertex = cells.get(cells.size() - n + j);
+                    Vertex upVertex = cells.get(cells.size() - n + j - 1);
                     addEdge(vertex, upVertex, MazeState.WALL, Direction.UP);
                 }
 
