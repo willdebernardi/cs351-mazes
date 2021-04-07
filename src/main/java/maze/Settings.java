@@ -4,6 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Reads provided file and sets corresponding variables
+ *
+ * Assumes that the provided file is correctly formatted
+ *
+ * @author Will DeBernardi, Christopher Medlin
+ */
 public class Settings {
     private  static int windowSize;
     private static int cellSize;
