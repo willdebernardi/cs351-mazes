@@ -8,22 +8,69 @@
  */
 package gui;
 
+import generators.DepthFirstGenerator;
+import generators.MazeGenerator;
+import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import maze.Direction;
+import maze.Maze;
 import maze.Vertex;
+
+import java.util.Arrays;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class Controller implements Display {
     @FXML
     Canvas canvas;
 
+    // cells are placed into this blocking queue by another thread, and drawn
+    // using the animation timer
+    BlockingQueue<Vertex> cellDrawingQueue;
+
+    public Controller() {
+        cellDrawingQueue = new ArrayBlockingQueue<Vertex>(2);
+    }
+
+    /**
+     * Called when the controller starts (FXML)
+     */
+    public void initialize() {
+        Thread t = new Thread(() -> {
+            DepthFirstGenerator generator = new DepthFirstGenerator(
+                    this, (m) -> {}
+            );
+            generator.generate(50);
+        });
+        t.start();
+
+        // black background
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (!cellDrawingQueue.isEmpty()) {
+                    try {
+                        drawCell(cellDrawingQueue.take());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+
+        timer.start();
+    }
+
     @Override
-    public void cellChanged(Vertex... cells) {
-        for (Vertex v : cells) {
-            drawCell(v);
-        }
+    public void cellsChanged(Vertex... cells) {
+        cellDrawingQueue.addAll(Arrays.asList(cells));
     }
 
     @Override
@@ -35,8 +82,6 @@ public class Controller implements Display {
     // borders of the cell are 8x2, making each cell 10x10
     private void drawCell(Vertex v) {
         GraphicsContext gc = this.canvas.getGraphicsContext2D();
-        // black background
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         // upper left corner of cell
         int x = 10*v.getX(), y = 10*v.getY();
         gc.setFill(Color.WHITE);

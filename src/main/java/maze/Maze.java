@@ -16,30 +16,30 @@ public class Maze {
     public Maze(int n) {
         cells = new ArrayList<>();
 
-        for(int i = 0; i <= n; i++) {
-            for(int j = 0; j <= n; j++) {
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
                 Vertex vertex = new Vertex(i,j);
                 cells.add(vertex);
 
                 if(i == 0) {
                     vertex.addEdge(null, MazeState.BOUNDARY, Direction.UP);
                 } else {
-                    Vertex upVertex = cells.get(cells.size() - n + j);
-                    addEdge(vertex, upVertex, MazeState.WALL, Direction.UP);
+                    Vertex upVertex = cells.get(cells.size() - n + j - 1);
+                    connect(vertex, upVertex, Direction.UP);
                 }
 
-                if(i == n) {
+                if(i == n-1) {
                     vertex.addEdge(null, MazeState.BOUNDARY, Direction.DOWN);
                 }
 
                 if(j == 0) {
                     vertex.addEdge(null, MazeState.BOUNDARY, Direction.LEFT);
                 } else {
-                    Vertex leftVertex = cells.get(cells.size() - 1);
-                    addEdge(vertex, leftVertex, MazeState.WALL, Direction.LEFT);
+                    Vertex leftVertex = cells.get(cells.size() - 2);
+                    connect(vertex, leftVertex, Direction.LEFT);
                 }
 
-                if(j == n) {
+                if(j == n-1) {
                     vertex.addEdge(null, MazeState.BOUNDARY, Direction.RIGHT);
                 }
 
@@ -47,7 +47,7 @@ public class Maze {
                 if (i == 0 && j == 0) {
                     vertex.getEdge(Direction.UP).setState(MazeState.EXIT);
                     this.exit = vertex;
-                } else if (i == n && j == n) {
+                } else if (i == n-1 && j == n-1) {
                     vertex.getEdge(Direction.DOWN).setState(MazeState.ENTRANCE);
                     this.entrance = vertex;
                 }
@@ -55,9 +55,10 @@ public class Maze {
         }
     }
 
-    public void addEdge(Vertex v1, Vertex v2, MazeState state, Direction direction) {
-        v1.addEdge(v2, state, direction);
-        v2.addEdge(v1, state, direction);
+    // connects two vertices with a wall
+    private void connect(Vertex v1, Vertex v2, Direction d) {
+        v1.addEdge(v2, MazeState.WALL, d);
+        v2.addEdge(v1, MazeState.WALL, d.reverse());
     }
 
     /**

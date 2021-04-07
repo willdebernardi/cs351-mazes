@@ -17,5 +17,6 @@ public class Main extends Application {
         Scene s = new Scene(loader.load(), 300, 300);
 
         primaryStage.setScene(s);
+        primaryStage.show();
     }
 }
