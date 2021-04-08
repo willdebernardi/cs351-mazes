@@ -38,7 +38,7 @@ public class DepthFirstGenerator extends MazeGenerator {
 
         while (!stack.isEmpty()) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -58,6 +58,7 @@ public class DepthFirstGenerator extends MazeGenerator {
                 // remove wall between the cells
                 this.tearDown(current.connectingEdge(next));
                 current = next;
+                this.visited.add(current);
                 this.stack.push(current);
             }
         }

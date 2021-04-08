@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.util.Pair;
 import maze.Direction;
 import maze.Maze;
 import maze.Vertex;
@@ -28,11 +29,12 @@ public class Controller implements Display {
     Canvas canvas;
 
     // cells are placed into this blocking queue by another thread, and drawn
-    // using the animation timer
-    BlockingQueue<Vertex> cellDrawingQueue;
+    // using the animation timer. the first element of each pair is the cell to
+    // be drawn, followed by the color to draw it in.
+    BlockingQueue<Pair<Vertex, Color>> cellDrawingQueue;
 
     public Controller() {
-        cellDrawingQueue = new ArrayBlockingQueue<Vertex>(2);
+        cellDrawingQueue = new ArrayBlockingQueue<>(2);
     }
 
     /**
@@ -41,7 +43,7 @@ public class Controller implements Display {
     public void initialize() {
         Thread t = new Thread(() -> {
             DepthFirstGenerator generator = new DepthFirstGenerator(
-                    this, (m) -> {}
+                    this, (m) -> {System.out.println("Finished!");}
             );
             generator.generate(50);
         });
@@ -57,7 +59,8 @@ public class Controller implements Display {
             public void handle(long now) {
                 if (!cellDrawingQueue.isEmpty()) {
                     try {
-                        drawCell(cellDrawingQueue.take());
+                        Pair<Vertex, Color> cell = cellDrawingQueue.take();
+                        drawCell(cell.getKey(), cell.getValue());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -70,7 +73,14 @@ public class Controller implements Display {
 
     @Override
     public void cellsChanged(Vertex... cells) {
-        cellDrawingQueue.addAll(Arrays.asList(cells));
+        for (Vertex v : cells) {
+            try {
+                Pair<Vertex, Color> p = new Pair<>(v, Color.WHITE);
+                this.cellDrawingQueue.put(p);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -80,27 +90,27 @@ public class Controller implements Display {
 
     // draws the given cell. the center of the cell is 8x8, and each of the 4
     // borders of the cell are 8x2, making each cell 10x10
-    private void drawCell(Vertex v) {
+    private void drawCell(Vertex v, Color c) {
         GraphicsContext gc = this.canvas.getGraphicsContext2D();
         // upper left corner of cell
         int x = 10*v.getX(), y = 10*v.getY();
-        gc.setFill(Color.WHITE);
+        gc.setFill(c);
         // fill the center square (the empty part inside of the cell)
         gc.fillRect(x + 2, y + 2, 8, 8);
 
         // draw the passageways accordingly (note that we are drawing on a black
         // background)
         if (!v.getEdge(Direction.DOWN).isWall()) {
-            gc.fillRect(x+2, y+8, 8, 2);
+            gc.fillRect(x+2, y+10, 8, 2);
         }
         if (!v.getEdge(Direction.RIGHT).isWall()) {
-            gc.fillRect(x+8, y+2, 2, 8);
+            gc.fillRect(x+10, y+2, 2, 8);
         }
         if (!v.getEdge(Direction.UP).isWall()) {
-            gc.fillRect(x+2, y, 2, 8);
+            gc.fillRect(x+2, y, 8, 2);
         }
         if (!v.getEdge(Direction.LEFT).isWall()) {
-            gc.fillRect(x, y+2, 8, 2);
+            gc.fillRect(x, y+2, 2, 8);
         }
     }
 }
