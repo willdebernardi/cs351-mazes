@@ -18,13 +18,13 @@ public class Maze {
 
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++) {
-                Vertex vertex = new Vertex(i,j);
+                Vertex vertex = new Vertex(j,i);
                 cells.add(vertex);
 
                 if(i == 0) {
                     vertex.addEdge(null, MazeState.BOUNDARY, Direction.UP);
                 } else {
-                    Vertex upVertex = cells.get(cells.size() - n + j - 1);
+                    Vertex upVertex = cells.get(cells.size() - n - 1);
                     connect(vertex, upVertex, Direction.UP);
                 }
 
