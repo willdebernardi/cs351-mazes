@@ -34,10 +34,9 @@ public class Kruskal extends MazeGenerator {
         Collections.shuffle(edgeSet);
 
         for(Edge e : edgeSet) {
-            if(!partition.inSameSet(e.getStart(), e.getEnd())) {
-                edgeSet.remove(e);
-                this.tearDown(e);
+            if(partition.inSameSet(e.getStart(), e.getEnd())) {
                 partition.join(e.getStart(), e.getEnd());
+                this.tearDown(e);
             }
         }
 
