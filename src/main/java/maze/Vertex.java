@@ -1,13 +1,11 @@
 package maze;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Vertex {
     private int x, y;
     private HashMap<Direction, Edge> edges;
+    private Set<Vertex> selfSet;
 
     public Vertex(int x, int y) {
         this.x = x;
@@ -33,6 +31,14 @@ public class Vertex {
 
     public Edge getEdge(Direction d) {
         return edges.get(d);
+    }
+
+    public Set<Vertex> getSelfSet() {
+        return selfSet;
+    }
+
+    public void setSelfSet(Set<Vertex> selfSet) {
+        this.selfSet = selfSet;
     }
 
     /**
