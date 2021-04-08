@@ -9,6 +9,7 @@
 package gui;
 
 import generators.DepthFirstGenerator;
+import generators.Kruskal;
 import generators.MazeGenerator;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -44,7 +45,7 @@ public class Controller implements Display {
      */
     public void initialize() {
         Thread t = new Thread(() -> {
-            DepthFirstGenerator generator = new DepthFirstGenerator(this, (m)-> {
+            MazeGenerator generator = new Kruskal(this, (m)-> {
                 MazeSolver solver = new DepthFirstSolver(this);
                 solver.solve(m);
             });
