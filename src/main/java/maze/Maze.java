@@ -69,4 +69,8 @@ public class Maze {
     public Vertex getEntrance() {
         return this.entrance;
     }
+
+    public ArrayList<Vertex> getCells() {
+        return cells;
+    }
 }
