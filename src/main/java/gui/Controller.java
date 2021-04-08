@@ -20,6 +20,8 @@ import javafx.util.Pair;
 import maze.Direction;
 import maze.Maze;
 import maze.Vertex;
+import solvers.DepthFirstSolver;
+import solvers.MazeSolver;
 
 import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -43,10 +45,11 @@ public class Controller implements Display {
      */
     public void initialize() {
         Thread t = new Thread(() -> {
-            Kruskal generator = new Kruskal(
-                    this, (m) -> {System.out.println("Finished!");}
-            );
-            generator.generate(50);
+            MazeGenerator generator = new Kruskal(this, (m)-> {
+                MazeSolver solver = new DepthFirstSolver(this);
+                solver.solve(m);
+            });
+            generator.generate(25);
         });
         t.start();
 
@@ -86,7 +89,12 @@ public class Controller implements Display {
 
     @Override
     public void updateSolver(String id, Vertex v) {
-        // draw the solver's location
+        Pair<Vertex, Color> p = new Pair<>(v, Color.GREEN);
+        try {
+            this.cellDrawingQueue.put(p);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     // draws the given cell. the center of the cell is 8x8, and each of the 4
