@@ -18,6 +18,10 @@ public class Kruskal extends MazeGenerator {
         edgeSet = new ArrayList<>();
     }
 
+    public Kruskal() {
+        this(null, null);
+    }
+
     @Override
     public Maze makeMaze(int size) {
         Maze m = new Maze(size);

@@ -29,6 +29,31 @@ public abstract class MazeGenerator {
     }
 
     /**
+     * Creates a new MazeGenerator
+     */
+    public MazeGenerator() {
+        this.display = null;
+        this.onGenerationComplete = null;
+    }
+
+    /**
+     * Sets the display to be updated during generation.
+     * @param d the display
+     */
+    public void setDisplay(Display d) {
+        this.display = d;
+    }
+
+    /**
+     * Sets the function to be called once generation is finished.
+     *
+     * @param onGenerationComplete the function, which has a maze passed to it
+     */
+    public void setOnGenerationComplete(Consumer<Maze> onGenerationComplete) {
+        this.onGenerationComplete = onGenerationComplete;
+    }
+
+    /**
      * Creates a maze according to this generator's algorithm.
      *
      * @return the newly created maze
@@ -50,6 +75,8 @@ public abstract class MazeGenerator {
      */
     public void tearDown(Edge e) {
         e.setState(MazeState.EMPTY);
-        display.cellsChanged(e.getStart(), e.getEnd());
+        if (display != null) {
+            display.cellsChanged(e.getStart(), e.getEnd());
+        }
     }
 }

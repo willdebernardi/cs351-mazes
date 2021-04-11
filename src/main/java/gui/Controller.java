@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Pair;
 import maze.Direction;
 import maze.Maze;
+import maze.Settings;
 import maze.Vertex;
 import solvers.DepthFirstSolver;
 import solvers.MazeSolver;
@@ -36,6 +37,8 @@ public class Controller implements Display {
     // be drawn, followed by the color to draw it in.
     BlockingQueue<Pair<Vertex, Color>> cellDrawingQueue;
 
+    Settings settings;
+
     public Controller() {
         cellDrawingQueue = new ArrayBlockingQueue<>(2);
     }
@@ -44,15 +47,6 @@ public class Controller implements Display {
      * Called when the controller starts (FXML)
      */
     public void initialize() {
-        Thread t = new Thread(() -> {
-            MazeGenerator generator = new Kruskal(this, (m)-> {
-                MazeSolver solver = new DepthFirstSolver(this);
-                solver.solve(m);
-            });
-            generator.generate(25);
-        });
-        t.start();
-
         // black background
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
@@ -121,5 +115,13 @@ public class Controller implements Display {
         if (!v.getEdge(Direction.LEFT).isWall()) {
             gc.fillRect(x, y+2, 2, 8);
         }
+    }
+
+    /**
+     * Uses the settings to know the cell size and window size.
+     * @param s the settings
+     */
+    public void setSettings(Settings s) {
+        this.settings = s;
     }
 }
