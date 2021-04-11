@@ -47,11 +47,6 @@ public class Controller implements Display {
      * Called when the controller starts (FXML)
      */
     public void initialize() {
-        // black background
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -91,29 +86,38 @@ public class Controller implements Display {
         }
     }
 
+    private void drawBackground() {
+        // black background
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
+
     // draws the given cell. the center of the cell is 8x8, and each of the 4
     // borders of the cell are 8x2, making each cell 10x10
     private void drawCell(Vertex v, Color c) {
+        int cellSize = settings.getCellSize();
+
         GraphicsContext gc = this.canvas.getGraphicsContext2D();
         // upper left corner of cell
-        int x = 10*v.getX(), y = 10*v.getY();
+        int x = cellSize*v.getX(), y = cellSize*v.getY();
         gc.setFill(c);
         // fill the center square (the empty part inside of the cell)
-        gc.fillRect(x + 2, y + 2, 8, 8);
+        gc.fillRect(x + 2, y + 2, cellSize-2, cellSize-2);
 
         // draw the passageways accordingly (note that we are drawing on a black
         // background)
         if (!v.getEdge(Direction.DOWN).isWall()) {
-            gc.fillRect(x+2, y+10, 8, 2);
+            gc.fillRect(x+2, y+cellSize, cellSize-2, 2);
         }
         if (!v.getEdge(Direction.RIGHT).isWall()) {
-            gc.fillRect(x+10, y+2, 2, 8);
+            gc.fillRect(x+cellSize, y+2, 2, cellSize-2);
         }
         if (!v.getEdge(Direction.UP).isWall()) {
-            gc.fillRect(x+2, y, 8, 2);
+            gc.fillRect(x+2, y, cellSize-2, 2);
         }
         if (!v.getEdge(Direction.LEFT).isWall()) {
-            gc.fillRect(x, y+2, 2, 8);
+            gc.fillRect(x, y+2, 2, cellSize-2);
         }
     }
 
@@ -123,5 +127,8 @@ public class Controller implements Display {
      */
     public void setSettings(Settings s) {
         this.settings = s;
+        this.canvas.setWidth(settings.getWindowSize());
+        this.canvas.setHeight(settings.getWindowSize());
+        drawBackground();
     }
 }
