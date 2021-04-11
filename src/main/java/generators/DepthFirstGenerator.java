@@ -27,6 +27,10 @@ public class DepthFirstGenerator extends MazeGenerator {
         visited = new HashSet<>();
     }
 
+    public DepthFirstGenerator() {
+        this(null, null);
+    }
+
     @Override
     public Maze makeMaze(int size) {
         Maze m = new Maze(size);

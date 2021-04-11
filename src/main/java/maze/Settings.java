@@ -1,8 +1,15 @@
 package maze;
 
+import generators.DepthFirstGenerator;
+import generators.Kruskal;
+import generators.MazeGenerator;
+import solvers.DepthFirstSolver;
+import solvers.MazeSolver;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 /**
  * Reads provided file and sets corresponding variables
@@ -12,10 +19,10 @@ import java.util.Scanner;
  * @author Will DeBernardi, Christopher Medlin
  */
 public class Settings {
-    private  static int windowSize;
-    private static int cellSize;
-    private static String generationAlgo;
-    private static String solverAlgo;
+    private int windowSize;
+    private int cellSize;
+    private String generationAlgo;
+    private String solverAlgo;
 
     public Settings(File file) throws FileNotFoundException {
         Scanner s = new Scanner(file);
@@ -33,11 +40,22 @@ public class Settings {
         return cellSize;
     }
 
-    public String getGenerationAlgo() {
-        return generationAlgo;
+    public MazeGenerator getGenerationAlgo() {
+        int size = windowSize/cellSize;
+        if (this.generationAlgo.equals("dfs")) {
+            return new DepthFirstGenerator();
+        } else if (this.generationAlgo.equals("kruskal")) {
+            return new Kruskal();
+        }
+
+        throw new IllegalStateException("Invalid generator setting.");
     }
 
-    public String getSolverAlgo() {
-        return solverAlgo;
+    public MazeSolver getSolverAlgo() {
+        if (this.solverAlgo.equals("df")) {
+            return new DepthFirstSolver();
+        }
+
+        throw new IllegalStateException("Invalid solver setting.");
     }
 }

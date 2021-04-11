@@ -23,16 +23,25 @@ public abstract class MazeSolver {
     }
 
     /**
+     * Create a new MazeSolver
+     */
+    public MazeSolver() {
+        this.display = null;
+    }
+
+    /**
      * Sends to the Display that the given cell (represented by the vertex) has
      * been visited.
      *
      * @param v the cell
      */
     public void visit(Vertex v) {
-        this.display.updateSolver("", v);
-        // paint the last visited cell back to white
-        this.display.cellsChanged(lastVisited);
-        this.lastVisited = v;
+        if (this.display != null) {
+            this.display.updateSolver("", v);
+            // paint the last visited cell back to white
+            this.display.cellsChanged(lastVisited);
+            this.lastVisited = v;
+        }
     }
 
     /**
@@ -48,4 +57,11 @@ public abstract class MazeSolver {
      * Solves from the given vertex as a starting point
      */
     public abstract void solveFrom(Vertex start);
+
+    /**
+     * Sets the display to be updated during solving.
+     */
+    public void setDisplay(Display display) {
+        this.display = display;
+    }
 }

@@ -25,6 +25,13 @@ public class DepthFirstSolver extends MazeSolver {
         this.visited = new HashSet<>();
     }
 
+    /**
+     * Create a new MazeSolver
+     */
+    public DepthFirstSolver() {
+        this(null);
+    }
+
     @Override
     public void solveFrom(Vertex start) {
         stack.push(start);
