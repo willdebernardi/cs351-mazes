@@ -1,9 +1,7 @@
 package maze;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class Vertex {
@@ -76,6 +74,19 @@ public class Vertex {
     }
 
     /**
+     * Returns every vertex that has not been visited, according to a set of
+     * visited vertices.
+     */
+    public List<Vertex> getUnvisitedAdjacents(Set<Vertex> visited) {
+        Predicate<Vertex> unvisitedFilter = v -> !visited.contains(v);
+        List<Vertex> unvisited = getReachableAdjacents()
+                                 .stream()
+                                 .filter(unvisitedFilter)
+                                 .collect(Collectors.toList());
+        return unvisited;
+    }
+
+    /**
      * Returns the edge connecting this vertex with the given vertex (if it
      * exists). If there is no such edge, return null
      */
@@ -86,5 +97,17 @@ public class Vertex {
             }
         }
         return null;
+    }
+
+    /**
+     * Returns whether one of the edges of this vertex has an edge with the
+     * given MazeState. This can be used to check if a vertex counts as an
+     * entrance/exit.
+     */
+    public boolean hasEdge(MazeState state) {
+        for (Edge e : getEdges()) {
+            if (e.getState() == state) return true;
+        }
+        return false;
     }
 }

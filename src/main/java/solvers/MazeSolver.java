@@ -39,7 +39,9 @@ public abstract class MazeSolver {
         if (this.display != null) {
             this.display.updateSolver("", v);
             // paint the last visited cell back to white
-            this.display.cellsChanged(lastVisited);
+            if (lastVisited != null) {
+                this.display.cellsChanged(lastVisited);
+            }
             this.lastVisited = v;
         }
     }
@@ -63,5 +65,12 @@ public abstract class MazeSolver {
      */
     public void setDisplay(Display display) {
         this.display = display;
+    }
+
+    /**
+     * Returns the display.
+     */
+    protected Display getDisplay() {
+        return this.display;
     }
 }
