@@ -14,8 +14,13 @@ public class Vertex {
         edges = new HashMap<>();
     }
 
-    public void addEdge(Vertex endVertex, MazeState state, Direction direction) {
-        edges.put(direction, new Edge(this, endVertex, state));
+    public void addEdge(Edge edge, Direction direction) {
+        edges.put(direction, edge);
+    }
+
+    public void addEdge(MazeState state, Direction direction) {
+        Edge edge = new Edge(this, null, state);
+        addEdge(edge, direction);
     }
 
     public Collection<Edge> getEdges() {
@@ -55,12 +60,12 @@ public class Vertex {
      * Returns every vertex attached to this one via an edge that is not a wall
      * or boundary
      */
-    public Collection<Vertex> getReachableAdjacents() {
+    public List<Vertex> getReachableAdjacents() {
         Collection<Edge> edges = this.getEdges()
                                      .stream()
                                      .filter(e -> !e.isWall())
                                      .collect(Collectors.toList());
-        HashSet<Vertex> vertices = new HashSet<>();
+        List<Vertex> vertices = new ArrayList<>();
 
         for (Edge e : edges) {
             if (e.getStart() == this && e.getEnd() != null) {

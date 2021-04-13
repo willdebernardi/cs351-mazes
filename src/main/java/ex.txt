@@ -1,4 +1,4 @@
-500
-25
-dfs
-mouse
+1000
+10
+kruskal
+df

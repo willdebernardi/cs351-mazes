@@ -22,25 +22,25 @@ public class Maze {
                 cells.add(vertex);
 
                 if(i == 0) {
-                    vertex.addEdge(null, MazeState.BOUNDARY, Direction.UP);
+                    vertex.addEdge(MazeState.BOUNDARY, Direction.UP);
                 } else {
                     Vertex upVertex = cells.get(cells.size() - n - 1);
                     connect(vertex, upVertex, Direction.UP);
                 }
 
                 if(i == n-1) {
-                    vertex.addEdge(null, MazeState.BOUNDARY, Direction.DOWN);
+                    vertex.addEdge(MazeState.BOUNDARY, Direction.DOWN);
                 }
 
                 if(j == 0) {
-                    vertex.addEdge(null, MazeState.BOUNDARY, Direction.LEFT);
+                    vertex.addEdge(MazeState.BOUNDARY, Direction.LEFT);
                 } else {
                     Vertex leftVertex = cells.get(cells.size() - 2);
                     connect(vertex, leftVertex, Direction.LEFT);
                 }
 
                 if(j == n-1) {
-                    vertex.addEdge(null, MazeState.BOUNDARY, Direction.RIGHT);
+                    vertex.addEdge(MazeState.BOUNDARY, Direction.RIGHT);
                 }
 
                 // make upper left corner the exit of the maze
@@ -57,8 +57,9 @@ public class Maze {
 
     // connects two vertices with a wall
     private void connect(Vertex v1, Vertex v2, Direction d) {
-        v1.addEdge(v2, MazeState.WALL, d);
-        v2.addEdge(v1, MazeState.WALL, d.reverse());
+        Edge edge = new Edge(v1, v2, MazeState.WALL);
+        v1.addEdge(edge, d);
+        v2.addEdge(edge, d.reverse());
     }
 
     /**

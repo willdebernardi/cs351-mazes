@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 public class RandomMouseSolver extends MazeSolver {
     ExecutorService exec;
     Set<Vertex> visited;
+    boolean multithreaded;
 
     /**
      * Creates a new solver using the random mouse algorithm.
@@ -26,10 +27,12 @@ public class RandomMouseSolver extends MazeSolver {
         super(d);
         this.exec = exec;
         visited = new HashSet<>();
+        this.multithreaded = true;
     }
 
-    public RandomMouseSolver() {
+    public RandomMouseSolver(boolean multithreaded) {
         this(null, Executors.newFixedThreadPool(1000));
+        this.multithreaded = multithreaded;
     }
 
     @Override
@@ -39,14 +42,24 @@ public class RandomMouseSolver extends MazeSolver {
 
         while (!current.hasEdge(MazeState.EXIT)) {
             visit(current);
-            List<Vertex> unvisited = current.getUnvisitedAdjacents(visited);
-            Collections.shuffle(unvisited);
+            visited.add(current);
+            List<Vertex> adjacents = null;
+            // if we are doing the multithreaded algorithm, adjacents must be
+            // unvisited
+            if (multithreaded) {
+                adjacents = current.getUnvisitedAdjacents(visited);
+            } else {
+                adjacents = current.getReachableAdjacents();
+            }
+            Collections.shuffle(adjacents);
             // make the first element the next current cell for this solver;
-            // make new solvers for the remaining elements.
-            if (unvisited.size() > 0) {
-                current = unvisited.get(0);
-                for (int i = 1; i < unvisited.size(); i++) {
-                    newMouse(unvisited.get(i));
+            // make new solvers for the remaining elements (if multithreaded).
+            if (adjacents.size() > 0) {
+                current = adjacents.get(0);
+                if (multithreaded) {
+                    for (int i = 1; i < adjacents.size(); i++) {
+                        newMouse(adjacents.get(i));
+                    }
                 }
             } else {
                 // dead end
