@@ -22,16 +22,19 @@ public class RandomMouseSolver extends MazeSolver {
      * @param d the display to be updated
      * @param exec the executor to use when creating a new RandomMouseSolver at
      *             an intersection.
+     * @param visited vertices to not backtrack to.
      */
-    public RandomMouseSolver(Display d, ExecutorService exec) {
+    public RandomMouseSolver(Display d, ExecutorService exec,
+                             Set<Vertex> visited) {
         super(d);
         this.exec = exec;
-        visited = new HashSet<>();
+        this.visited = visited;
         this.multithreaded = true;
     }
 
     public RandomMouseSolver(boolean multithreaded) {
-        this(null, Executors.newFixedThreadPool(1000));
+        this(null, Executors.newFixedThreadPool(1000),
+                new HashSet<>());
         this.multithreaded = multithreaded;
     }
 
@@ -83,7 +86,7 @@ public class RandomMouseSolver extends MazeSolver {
     private void newMouse(Vertex v, Vertex exit) {
         Runnable r = () -> {
             RandomMouseSolver solver = new RandomMouseSolver(
-                    getDisplay(), exec
+                    getDisplay(), exec, this.visited
             );
             solver.solveFrom(v, exit);
         };

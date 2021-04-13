@@ -41,7 +41,7 @@ public abstract class MazeSolver {
             this.display.updateSolver("", v);
             // paint the last visited cell back to white
             if (lastVisited != null) {
-                this.display.cellsChanged(lastVisited);
+                this.display.cellsChanged(Color.LIGHTGREEN, lastVisited);
             }
             this.lastVisited = v;
         }
