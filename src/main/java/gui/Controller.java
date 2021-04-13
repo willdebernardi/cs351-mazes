@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-public class Controller implements Display {
+public class Controller extends Display {
     @FXML
     Canvas canvas;
 
@@ -65,9 +65,9 @@ public class Controller implements Display {
     }
 
     @Override
-    public void cellsChanged(Vertex... cells) {
+    public void cellsChanged(Color color, Vertex... cells) {
         for (Vertex c : cells) {
-            this.queueForDrawing(c, Color.WHITE);
+            this.queueForDrawing(c, color);
         }
     }
 

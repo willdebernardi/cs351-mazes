@@ -10,9 +10,10 @@
  */
 package gui;
 
+import javafx.scene.paint.Color;
 import maze.Vertex;
 
-public interface Display {
+public abstract class Display {
 
     /**
      * This is called during maze generation when one or more cells have been
@@ -22,7 +23,20 @@ public interface Display {
      *              will be drawn on the GUI, using the coordinates stored in
      *              the Vertex object
      */
-    void cellsChanged(Vertex... cells);
+    public void cellsChanged(Vertex... cells) {
+        cellsChanged(Color.WHITE, cells);
+    }
+
+    /**
+     * This is called during maze generation when one or more cells have been
+     * changed (for example, when a wall has been broken down between two cells)
+     *
+     * @param color the color to paint the cells
+     * @param cells the cells that have been changed, whose newly updated form
+     *              will be drawn on the GUI, using the coordinates stored in
+     *              the Vertex object
+     */
+    public abstract void cellsChanged(Color color, Vertex... cells);
 
     /**
      * Called by a maze solver when its location in the maze has changed.
@@ -32,5 +46,5 @@ public interface Display {
      *           that each thread can be uniquely identified
      * @param v the newly visited cell
      */
-    void updateSolver(String id, Vertex v);
+    public abstract void updateSolver(String id, Vertex v);
 }

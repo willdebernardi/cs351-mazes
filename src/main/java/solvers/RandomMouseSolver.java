@@ -36,11 +36,11 @@ public class RandomMouseSolver extends MazeSolver {
     }
 
     @Override
-    public void solveFrom(Vertex start) {
+    public void solveFrom(Vertex start, Vertex exit) {
         Vertex current = start;
         boolean deadEnd = false;
 
-        while (!current.hasEdge(MazeState.EXIT)) {
+        while (current != exit) {
             visit(current);
             visited.add(current);
             List<Vertex> adjacents = null;
@@ -58,7 +58,7 @@ public class RandomMouseSolver extends MazeSolver {
                 current = adjacents.get(0);
                 if (multithreaded) {
                     for (int i = 1; i < adjacents.size(); i++) {
-                        newMouse(adjacents.get(i));
+                        newMouse(adjacents.get(i), exit);
                     }
                 }
             } else {
@@ -80,12 +80,12 @@ public class RandomMouseSolver extends MazeSolver {
         exec.shutdownNow();
     }
 
-    private void newMouse(Vertex v) {
+    private void newMouse(Vertex v, Vertex exit) {
         Runnable r = () -> {
             RandomMouseSolver solver = new RandomMouseSolver(
                     getDisplay(), exec
             );
-            solver.solveFrom(v);
+            solver.solveFrom(v, exit);
         };
         if (!exec.isShutdown()) {
             exec.execute(r);
