@@ -33,7 +33,7 @@ public class DepthFirstSolver extends MazeSolver {
     }
 
     @Override
-    public void solveFrom(Vertex start) {
+    public void solveFrom(Vertex start, Vertex exit) {
         stack.push(start);
         this.visited.add(start);
         Vertex current = null;
@@ -49,7 +49,7 @@ public class DepthFirstSolver extends MazeSolver {
 
             current = stack.pop();
             this.visit(current);
-            if (current.getEdge(Direction.UP).getState() == MazeState.EXIT) {
+            if (current == exit) {
                 return;
             }
 

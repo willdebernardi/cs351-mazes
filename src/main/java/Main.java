@@ -45,7 +45,6 @@ public class Main extends Application {
             solver.solve(maze);
         });
 
-        ExecutorService exec = Executors.newFixedThreadPool(10);
-        exec.execute(() -> gen.generate(windowSize/cellSize));
+        new Thread(() -> gen.generate(windowSize/cellSize)).start();
     }
 }

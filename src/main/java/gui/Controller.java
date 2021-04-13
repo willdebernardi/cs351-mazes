@@ -28,7 +28,7 @@ import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-public class Controller implements Display {
+public class Controller extends Display {
     @FXML
     Canvas canvas;
 
@@ -50,7 +50,7 @@ public class Controller implements Display {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (!cellDrawingQueue.isEmpty()) {
+                while (!cellDrawingQueue.isEmpty()) {
                     try {
                         Pair<Vertex, Color> cell = cellDrawingQueue.take();
                         drawCell(cell.getKey(), cell.getValue());
@@ -65,24 +65,25 @@ public class Controller implements Display {
     }
 
     @Override
-    public void cellsChanged(Vertex... cells) {
-        for (Vertex v : cells) {
-            try {
-                Pair<Vertex, Color> p = new Pair<>(v, Color.WHITE);
-                this.cellDrawingQueue.put(p);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+    public void cellsChanged(Color color, Vertex... cells) {
+        for (Vertex c : cells) {
+            this.queueForDrawing(c, color);
         }
     }
 
     @Override
     public void updateSolver(String id, Vertex v) {
-        Pair<Vertex, Color> p = new Pair<>(v, Color.GREEN);
+        this.queueForDrawing(v, Color.GREEN);
+    }
+
+    private void queueForDrawing(Vertex v, Color c) {
+        Pair<Vertex, Color> p = new Pair<>(v, c);
         try {
             this.cellDrawingQueue.put(p);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            // in this case, the thread attempting to draw the cell has been
+            // ended, so we can do nothing.
+            return;
         }
     }
 

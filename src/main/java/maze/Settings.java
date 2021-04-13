@@ -5,6 +5,7 @@ import generators.Kruskal;
 import generators.MazeGenerator;
 import solvers.DepthFirstSolver;
 import solvers.MazeSolver;
+import solvers.RandomMouseSolver;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,6 +55,10 @@ public class Settings {
     public MazeSolver getSolverAlgo() {
         if (this.solverAlgo.equals("df")) {
             return new DepthFirstSolver();
+        } else if (this.solverAlgo.equals("mouse_thread")) {
+            return new RandomMouseSolver(true);
+        } else if (this.solverAlgo.equals("mouse")) {
+            return new RandomMouseSolver(false);
         }
 
         throw new IllegalStateException("Invalid solver setting.");

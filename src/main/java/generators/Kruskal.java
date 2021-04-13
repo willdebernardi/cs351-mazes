@@ -7,15 +7,13 @@ import maze.MazeState;
 import maze.Vertex;
 import utility.Partition;
 
+import java.time.temporal.ValueRange;
 import java.util.*;
 import java.util.function.Consumer;
 
 public class Kruskal extends MazeGenerator {
-    List<Edge> edgeSet;
-
     public Kruskal(Display d, Consumer<Maze> onGenerationComplete) {
         super(d, onGenerationComplete);
-        edgeSet = new ArrayList<>();
     }
 
     public Kruskal() {
@@ -24,6 +22,7 @@ public class Kruskal extends MazeGenerator {
 
     @Override
     public Maze makeMaze(int size) {
+        Set<Edge> edgeSet = new HashSet<>();
         Maze m = new Maze(size);
         Partition<Vertex> partition = new Partition<>(m.getCells());
 
@@ -35,9 +34,10 @@ public class Kruskal extends MazeGenerator {
             }
         }
 
-        Collections.shuffle(edgeSet);
+        ArrayList<Edge> walls = new ArrayList<>(edgeSet);
+        Collections.shuffle(walls);
 
-        for(Edge e : edgeSet) {
+        for(Edge e : walls) {
             if(partition.inSameSet(e.getStart(), e.getEnd())) {
                 partition.join(e.getStart(), e.getEnd());
                 this.tearDown(e);

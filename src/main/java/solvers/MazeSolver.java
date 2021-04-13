@@ -6,6 +6,7 @@
 package solvers;
 
 import gui.Display;
+import javafx.scene.paint.Color;
 import maze.Maze;
 import maze.Vertex;
 
@@ -39,7 +40,9 @@ public abstract class MazeSolver {
         if (this.display != null) {
             this.display.updateSolver("", v);
             // paint the last visited cell back to white
-            this.display.cellsChanged(lastVisited);
+            if (lastVisited != null) {
+                this.display.cellsChanged(Color.LIGHTGREEN, lastVisited);
+            }
             this.lastVisited = v;
         }
     }
@@ -50,18 +53,27 @@ public abstract class MazeSolver {
      * @param m the maze to be solved.
      */
     public void solve(Maze m) {
-        this.solveFrom(m.getEntrance());
+        // draw exit.
+        display.cellsChanged(Color.RED, m.getExit());
+        this.solveFrom(m.getEntrance(), m.getExit());
     }
 
     /**
      * Solves from the given vertex as a starting point
      */
-    public abstract void solveFrom(Vertex start);
+    public abstract void solveFrom(Vertex start, Vertex exit);
 
     /**
      * Sets the display to be updated during solving.
      */
     public void setDisplay(Display display) {
         this.display = display;
+    }
+
+    /**
+     * Returns the display.
+     */
+    protected Display getDisplay() {
+        return this.display;
     }
 }
