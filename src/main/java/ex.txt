@@ -1,4 +1,4 @@
 500
 10
-kruskal
-mouse_thread
+aldous
+df

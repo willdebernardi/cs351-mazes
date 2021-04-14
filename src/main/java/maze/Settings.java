@@ -3,6 +3,7 @@ package maze;
 import generators.DepthFirstGenerator;
 import generators.Kruskal;
 import generators.MazeGenerator;
+import generators.Aldous;
 import solvers.DepthFirstSolver;
 import solvers.MazeSolver;
 import solvers.RandomMouseSolver;
@@ -10,7 +11,6 @@ import solvers.RandomMouseSolver;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.function.Consumer;
 
 /**
  * Reads provided file and sets corresponding variables
@@ -43,22 +43,26 @@ public class Settings {
 
     public MazeGenerator getGenerationAlgo() {
         int size = windowSize/cellSize;
-        if (this.generationAlgo.equals("dfs")) {
-            return new DepthFirstGenerator();
-        } else if (this.generationAlgo.equals("kruskal")) {
-            return new Kruskal();
+        switch (this.generationAlgo) {
+            case "dfs":
+                return new DepthFirstGenerator();
+            case "kruskal":
+                return new Kruskal();
+            case "aldous":
+                return new Aldous();
         }
 
         throw new IllegalStateException("Invalid generator setting.");
     }
 
     public MazeSolver getSolverAlgo() {
-        if (this.solverAlgo.equals("df")) {
-            return new DepthFirstSolver();
-        } else if (this.solverAlgo.equals("mouse_thread")) {
-            return new RandomMouseSolver(true);
-        } else if (this.solverAlgo.equals("mouse")) {
-            return new RandomMouseSolver(false);
+        switch (this.solverAlgo) {
+            case "df":
+                return new DepthFirstSolver();
+            case "mouse_thread":
+                return new RandomMouseSolver(true);
+            case "mouse":
+                return new RandomMouseSolver(false);
         }
 
         throw new IllegalStateException("Invalid solver setting.");
