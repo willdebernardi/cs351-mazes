@@ -20,7 +20,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Will handle using .getParameters() to take file from command line arg
+        // TODO: change to accept command line input
         Settings settings = new Settings(new File("src/main/java/ex.txt"));
         int windowSize = settings.getWindowSize();
         int cellSize = settings.getCellSize();
@@ -28,7 +28,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(
                 this.getClass().getResource("main.fxml")
         );
-        // TODO width and height must be determined by settings!
+
         Scene s = new Scene(loader.load(), windowSize, windowSize);
         Controller controller = loader.getController();
         controller.setSettings(settings);
