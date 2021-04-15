@@ -1,9 +1,6 @@
 package maze;
 
-import generators.DepthFirstGenerator;
-import generators.Kruskal;
-import generators.MazeGenerator;
-import generators.Aldous;
+import generators.*;
 import solvers.*;
 
 import java.io.File;
@@ -20,6 +17,7 @@ import java.util.Scanner;
 public class Settings {
     private int windowSize;
     private int cellSize;
+    private int fps;
     private String generationAlgo;
     private String solverAlgo;
 
@@ -29,6 +27,12 @@ public class Settings {
         cellSize = s.nextInt();
         generationAlgo = s.next();
         solverAlgo = s.next();
+
+        if (s.hasNextInt()) {
+            this.fps = s.nextInt();
+        } else {
+            this.fps = 60;
+        }
     }
 
     public int getWindowSize() {
@@ -37,6 +41,10 @@ public class Settings {
 
     public int getCellSize() {
         return cellSize;
+    }
+
+    public int getFPS() {
+        return fps;
     }
 
     public MazeGenerator getGenerationAlgo() {
@@ -48,6 +56,8 @@ public class Settings {
                 return new Kruskal();
             case "aldous":
                 return new Aldous();
+            case "prim":
+                return new PrimsGenerator();
         }
 
         throw new IllegalStateException("Invalid generator setting.");

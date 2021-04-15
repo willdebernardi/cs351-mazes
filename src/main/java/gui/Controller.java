@@ -38,8 +38,12 @@ public class Controller extends Display {
     BlockingQueue<Pair<Vertex, Color>> cellDrawingQueue;
 
     Settings settings;
+    int fps;
+    long lastDraw;
 
     public Controller() {
+        fps = 60;
+        lastDraw = 0;
         cellDrawingQueue = new ArrayBlockingQueue<>(2);
     }
 
@@ -50,6 +54,7 @@ public class Controller extends Display {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                if ((now - lastDraw) / 1000000 < 1000/fps) return;
                 while (!cellDrawingQueue.isEmpty()) {
                     try {
                         Pair<Vertex, Color> cell = cellDrawingQueue.take();
@@ -58,6 +63,7 @@ public class Controller extends Display {
                         e.printStackTrace();
                     }
                 }
+                lastDraw = now;
             }
         };
 
@@ -131,6 +137,7 @@ public class Controller extends Display {
         this.settings = s;
         this.canvas.setWidth(settings.getWindowSize());
         this.canvas.setHeight(settings.getWindowSize());
+        this.fps = settings.getFPS();
         drawBackground();
     }
 }
