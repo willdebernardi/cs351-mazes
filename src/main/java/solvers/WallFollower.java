@@ -34,13 +34,12 @@ public class WallFollower extends MazeSolver{
             entranceDirection = Direction.DOWN;
         }
         Direction direction = entranceDirection.reverse();
-        System.out.println(direction);
 
         while(current != exit) {
-            if(current.getEdge(Direction.RIGHT).getState() == MazeState.EMPTY) {
+            if(current.getEdge(direction.turnRight()).getState() == MazeState.EMPTY) {
                 direction = direction.turnRight();
             } else if(current.getEdge(direction).getState() == MazeState.EMPTY) {
-            } else if (current.getEdge(Direction.LEFT).getState() == MazeState.EMPTY) {
+            } else if (current.getEdge(direction.turnLeft()).getState() == MazeState.EMPTY) {
                 direction = direction.turnLeft();
             } else {
                 direction = direction.reverse();
