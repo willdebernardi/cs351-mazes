@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 public class WallFollower extends MazeSolver{
     ExecutorService exec;
     boolean multithreaded;
+    static boolean firstExec = true;
 
     public WallFollower(Display d, ExecutorService exec) {
         super(d);
@@ -28,8 +29,9 @@ public class WallFollower extends MazeSolver{
 
     @Override
     public void solveFrom(Vertex start, Vertex exit) {
-        if(multithreaded) {
+        if(multithreaded && firstExec) {
             newThread(exit, start);
+            firstExec = false;
         }
         Vertex current = start;
         visit(current);
