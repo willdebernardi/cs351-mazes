@@ -1,4 +1,4 @@
 500
 20
 kruskal
-wall_thread
+pledge

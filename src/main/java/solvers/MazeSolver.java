@@ -55,6 +55,7 @@ public abstract class MazeSolver {
      */
     public void solve(Maze m) {
         // draw exit.
+        visit(m.getEntrance());
         display.cellsChanged(Color.RED, m.getExit());
         this.solveFrom(m.getEntrance(), m.getExit());
     }
@@ -121,5 +122,28 @@ public abstract class MazeSolver {
                this.dir = this.dir.reverse();
                break;
        }
+    }
+
+    /**
+     * Turns according to the right hand rule.
+     *
+     * @param current the current vertex
+     * @return the angle turned
+     */
+    public int rightHand(Vertex current) {
+        Direction dir = getCurrentDirection();
+        if(current.getEdge(dir.turnRight()).getState() == MazeState.EMPTY) {
+            this.turn(Direction.RIGHT);
+            return 90;
+        } else if(current.getEdge(dir).getState() == MazeState.EMPTY) {
+            this.turn(Direction.UP);
+            return 0;
+        } else if (current.getEdge(dir.turnLeft()).getState() == MazeState.EMPTY) {
+            this.turn(Direction.LEFT);
+            return -90;
+        } else {
+            this.turn(Direction.DOWN);
+            return -180;
+        }
     }
 }
