@@ -92,6 +92,18 @@ public class Vertex {
     }
 
     /**
+     * Returns the vertex found by travelling along an edge, checking to
+     * ensure that the found vertex is not itself.
+     */
+    public Vertex getVertexFromEdge(Edge e) {
+        if(e.getStart() == this) {
+            return e.getEnd();
+        } else {
+            return e.getStart();
+        }
+    }
+
+    /**
      * Returns the edge connecting this vertex with the given vertex (if it
      * exists). If there is no such edge, return null
      */

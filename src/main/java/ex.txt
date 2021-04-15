@@ -1,4 +1,4 @@
 500
-10
-aldous
-df
+20
+kruskal
+wall_thread

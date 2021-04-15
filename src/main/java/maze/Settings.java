@@ -7,6 +7,7 @@ import generators.Aldous;
 import solvers.DepthFirstSolver;
 import solvers.MazeSolver;
 import solvers.RandomMouseSolver;
+import solvers.WallFollower;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,6 +64,10 @@ public class Settings {
                 return new RandomMouseSolver(true);
             case "mouse":
                 return new RandomMouseSolver(false);
+            case "wall":
+                return new WallFollower(false);
+            case "wall_thread":
+                return new WallFollower(true);
         }
 
         throw new IllegalStateException("Invalid solver setting.");
