@@ -1,9 +1,6 @@
 package maze;
 
-import generators.DepthFirstGenerator;
-import generators.Kruskal;
-import generators.MazeGenerator;
-import generators.Aldous;
+import generators.*;
 import solvers.DepthFirstSolver;
 import solvers.MazeSolver;
 import solvers.RandomMouseSolver;
@@ -51,6 +48,8 @@ public class Settings {
                 return new Kruskal();
             case "aldous":
                 return new Aldous();
+            case "prim":
+                return new PrimsGenerator();
         }
 
         throw new IllegalStateException("Invalid generator setting.");

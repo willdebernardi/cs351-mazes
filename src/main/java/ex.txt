@@ -1,4 +1,4 @@
 500
 20
-kruskal
+prim
 wall_thread
