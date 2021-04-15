@@ -8,19 +8,31 @@ import maze.Settings;
 import solvers.MazeSolver;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class Main extends Application {
+    private static Settings settings;
+
     public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Please give path to configuration file.");
+        } else {
+            try {
+                settings = new Settings(new File(args[0]));
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found.");
+                System.exit(1);
+            }
+        }
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // TODO: change to accept command line input
         Settings settings = new Settings(new File("src/main/java/ex.txt"));
         int windowSize = settings.getWindowSize();
         int cellSize = settings.getCellSize();

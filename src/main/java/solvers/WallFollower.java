@@ -48,45 +48,25 @@ public class WallFollower extends MazeSolver{
      */
     @Override
     public void solveFrom(Vertex start, Vertex exit) {
+        initDirection(start);
         if(multithreaded && firstExec) {
             newThread(exit, start);
             firstExec = false;
         }
         Vertex current = start;
         visit(current);
-        Direction entranceDirection = null;
-        if(current.getEdge(Direction.LEFT).getState() == MazeState.ENTRANCE ||
-        current.getEdge(Direction.LEFT).getState() == MazeState.EXIT) {
-            entranceDirection = Direction.LEFT;
-        } else if (current.getEdge(Direction.UP).getState() == MazeState.ENTRANCE ||
-                current.getEdge(Direction.UP).getState() == MazeState.EXIT) {
-            entranceDirection = Direction.UP;
-        } else if (current.getEdge(Direction.RIGHT).getState() == MazeState.ENTRANCE ||
-                current.getEdge(Direction.RIGHT).getState() == MazeState.EXIT) {
-            entranceDirection = Direction.RIGHT;
-        } else if (current.getEdge(Direction.DOWN).getState() == MazeState.ENTRANCE ||
-                current.getEdge(Direction.DOWN).getState() == MazeState.EXIT) {
-            entranceDirection = Direction.DOWN;
-        }
-        Direction direction = entranceDirection.reverse();
 
         while(current != exit) {
-            if(current.getEdge(direction.turnRight()).getState() == MazeState.EMPTY) {
-                direction = direction.turnRight();
-            } else if(current.getEdge(direction).getState() == MazeState.EMPTY) {
-            } else if (current.getEdge(direction.turnLeft()).getState() == MazeState.EMPTY) {
-                direction = direction.turnLeft();
-            } else {
-                direction = direction.reverse();
-            }
+            // turn according to right hand rule
+            this.rightHand(current);
 
-            Edge connectionEdge = current.getEdge(direction);
+            Edge connectionEdge = current.getEdge(getCurrentDirection());
             Vertex next = current.getVertexFromEdge(connectionEdge);
             visit(next);
             current = next;
         }
 
-        exec.shutdownNow();
+        //exec.shutdownNow();
     }
 
     /**

@@ -46,5 +46,5 @@ public abstract class Display {
      *           that each thread can be uniquely identified
      * @param v the newly visited cell
      */
-    public abstract void updateSolver(String id, Vertex v);
+    public abstract void updateSolver(Vertex visited, Vertex lastVisited);
 }
