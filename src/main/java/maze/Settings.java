@@ -65,7 +65,9 @@ public class Settings {
             case "mouse":
                 return new RandomMouseSolver(false);
             case "wall":
-                return new WallFollower();
+                return new WallFollower(false);
+            case "wall_thread":
+                return new WallFollower(true);
         }
 
         throw new IllegalStateException("Invalid solver setting.");

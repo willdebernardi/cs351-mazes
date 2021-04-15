@@ -6,31 +6,45 @@ import maze.Edge;
 import maze.MazeState;
 import maze.Vertex;
 
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 
 public class WallFollower extends MazeSolver{
+    ExecutorService exec;
+    boolean multithreaded;
 
-    public WallFollower(Display d) {
+    public WallFollower(Display d, ExecutorService exec) {
         super(d);
+        this.exec = exec;
+        this.multithreaded = true;
     }
 
-    public WallFollower() {
-        this(null);
+    public WallFollower(boolean multithreaded) {
+        this(null, Executors.newFixedThreadPool(1000));
+        this.multithreaded = multithreaded;
     }
 
 
     @Override
     public void solveFrom(Vertex start, Vertex exit) {
+        if(multithreaded) {
+            newThread(exit, start);
+        }
         Vertex current = start;
         visit(current);
         Direction entranceDirection = null;
-        if(current.getEdge(Direction.LEFT).getState() == MazeState.ENTRANCE) {
+        if(current.getEdge(Direction.LEFT).getState() == MazeState.ENTRANCE ||
+        current.getEdge(Direction.LEFT).getState() == MazeState.EXIT) {
             entranceDirection = Direction.LEFT;
-        } else if (current.getEdge(Direction.UP).getState() == MazeState.ENTRANCE) {
+        } else if (current.getEdge(Direction.UP).getState() == MazeState.ENTRANCE ||
+                current.getEdge(Direction.UP).getState() == MazeState.EXIT) {
             entranceDirection = Direction.UP;
-        } else if (current.getEdge(Direction.RIGHT).getState() == MazeState.ENTRANCE) {
+        } else if (current.getEdge(Direction.RIGHT).getState() == MazeState.ENTRANCE ||
+                current.getEdge(Direction.RIGHT).getState() == MazeState.EXIT) {
             entranceDirection = Direction.RIGHT;
-        } else if (current.getEdge(Direction.DOWN).getState() == MazeState.ENTRANCE) {
+        } else if (current.getEdge(Direction.DOWN).getState() == MazeState.ENTRANCE ||
+                current.getEdge(Direction.DOWN).getState() == MazeState.EXIT) {
             entranceDirection = Direction.DOWN;
         }
         Direction direction = entranceDirection.reverse();
@@ -49,6 +63,18 @@ public class WallFollower extends MazeSolver{
             Vertex next = current.getVertexFromEdge(connectionEdge);
             visit(next);
             current = next;
+        }
+
+        exec.shutdownNow();
+    }
+
+    public void newThread(Vertex v, Vertex exit) {
+        Runnable r = () -> {
+            WallFollower follower = new WallFollower(getDisplay(), exec);
+            follower.solveFrom(v, exit);
+        };
+        if(!exec.isShutdown()) {
+            exec.execute(r);
         }
     }
 }
