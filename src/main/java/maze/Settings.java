@@ -1,10 +1,7 @@
 package maze;
 
 import generators.*;
-import solvers.DepthFirstSolver;
-import solvers.MazeSolver;
-import solvers.RandomMouseSolver;
-import solvers.WallFollower;
+import solvers.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +17,7 @@ import java.util.Scanner;
 public class Settings {
     private int windowSize;
     private int cellSize;
+    private int fps;
     private String generationAlgo;
     private String solverAlgo;
 
@@ -29,6 +27,12 @@ public class Settings {
         cellSize = s.nextInt();
         generationAlgo = s.next();
         solverAlgo = s.next();
+
+        if (s.hasNextInt()) {
+            this.fps = s.nextInt();
+        } else {
+            this.fps = 60;
+        }
     }
 
     public int getWindowSize() {
@@ -37,6 +41,10 @@ public class Settings {
 
     public int getCellSize() {
         return cellSize;
+    }
+
+    public int getFPS() {
+        return fps;
     }
 
     public MazeGenerator getGenerationAlgo() {

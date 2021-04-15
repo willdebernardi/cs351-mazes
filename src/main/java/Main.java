@@ -20,6 +20,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Please give path to configuration file.");
+            System.exit(1);
         } else {
             try {
                 settings = new Settings(new File(args[0]));
@@ -33,7 +34,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Settings settings = new Settings(new File("src/main/java/ex.txt"));
         int windowSize = settings.getWindowSize();
         int cellSize = settings.getCellSize();
 
