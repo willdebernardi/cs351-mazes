@@ -65,15 +65,16 @@ public class Controller extends Display {
     }
 
     @Override
-    public void cellsChanged(Color color, Vertex... cells) {
+    public synchronized void cellsChanged(Color color, Vertex... cells) {
         for (Vertex c : cells) {
             this.queueForDrawing(c, color);
         }
     }
 
     @Override
-    public void updateSolver(String id, Vertex v) {
-        this.queueForDrawing(v, Color.GREEN);
+    public synchronized void updateSolver(Vertex visited, Vertex lastVisited) {
+        queueForDrawing(visited, Color.GREEN);
+        queueForDrawing(lastVisited, Color.LIGHTGREEN);
     }
 
     private void queueForDrawing(Vertex v, Color c) {

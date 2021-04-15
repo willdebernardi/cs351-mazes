@@ -4,10 +4,7 @@ import generators.DepthFirstGenerator;
 import generators.Kruskal;
 import generators.MazeGenerator;
 import generators.Aldous;
-import solvers.DepthFirstSolver;
-import solvers.MazeSolver;
-import solvers.RandomMouseSolver;
-import solvers.WallFollower;
+import solvers.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,6 +65,8 @@ public class Settings {
                 return new WallFollower(false);
             case "wall_thread":
                 return new WallFollower(true);
+            case "pledge":
+                return new PledgeSolver();
         }
 
         throw new IllegalStateException("Invalid solver setting.");
