@@ -91,6 +91,14 @@ public class Vertex {
         return unvisited;
     }
 
+    public Vertex getVertexFromEdge(Edge e) {
+        if(e.getStart() == this) {
+            return e.getEnd();
+        } else {
+            return e.getStart();
+        }
+    }
+
     /**
      * Returns the edge connecting this vertex with the given vertex (if it
      * exists). If there is no such edge, return null
