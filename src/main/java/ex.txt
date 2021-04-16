@@ -1,5 +1,5 @@
 500
-20
-prim
-pledge
-1
+10
+aldous
+mouse
+60

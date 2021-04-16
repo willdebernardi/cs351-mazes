@@ -33,7 +33,7 @@ public class RandomMouseSolver extends MazeSolver {
     }
 
     public RandomMouseSolver(boolean multithreaded) {
-        this(null, Executors.newFixedThreadPool(1000),
+        this(null, Executors.newFixedThreadPool(2000),
                 new HashSet<>());
         this.multithreaded = multithreaded;
     }
