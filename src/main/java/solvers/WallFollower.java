@@ -1,9 +1,7 @@
 package solvers;
 
 import gui.Display;
-import maze.Direction;
 import maze.Edge;
-import maze.MazeState;
 import maze.Vertex;
 
 import java.util.concurrent.ExecutorService;

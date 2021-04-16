@@ -10,7 +10,16 @@ import utility.Partition;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * An implementation of the Kruskal maze generation algorithm
+ * @author Will DeBernardi
+ */
 public class Kruskal extends MazeGenerator {
+    /**
+     * Creates a new maze generator
+     * @param d - display to be updated
+     * @param onGenerationComplete - called when generation is complete
+     */
     public Kruskal(Display d, Consumer<Maze> onGenerationComplete) {
         super(d, onGenerationComplete);
     }
@@ -19,6 +28,11 @@ public class Kruskal extends MazeGenerator {
         this(null, null);
     }
 
+    /**
+     * Generates the maze based upon the constraints of the algorithm
+     * @param size - size of the maze to generate
+     * @return - the generated maze
+     */
     @Override
     public Maze makeMaze(int size) {
         Set<Edge> edgeSet = new HashSet<>();

@@ -2,6 +2,14 @@ package utility;
 
 import java.util.*;
 
+/**
+ * Generic utility class designed for the Kruskal algorithm
+ * Creates a list of disjoint sets for each object in a provided
+ * list, and can join the sets of two specified objects together
+ *
+ * @author Will DeBernardi
+ * @param <T> - object type to be operated upon
+ */
 public class Partition<T> {
     List<Set<T>> setList;
 

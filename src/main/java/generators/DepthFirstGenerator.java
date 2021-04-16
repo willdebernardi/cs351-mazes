@@ -10,6 +10,10 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * An implementation of the depth-first maze generation algorithm
+ * @author Christopher Medlin
+ */
 public class DepthFirstGenerator extends MazeGenerator {
     Stack<Vertex> stack;
     // make it easy to check if a cell has been visited
@@ -31,6 +35,11 @@ public class DepthFirstGenerator extends MazeGenerator {
         this(null, null);
     }
 
+    /**
+     * Generates a maze based on the constraints of the algorithm
+     * @param size - size of the maze to generate
+     * @return - the generated maze
+     */
     @Override
     public Maze makeMaze(int size) {
         Maze m = new Maze(size);

@@ -4,6 +4,11 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * Logic for the vertex, which represents the cells within the maze
+ *
+ * @author Will DeBernardi, Christopher Medlin
+ */
 public class Vertex {
     private int x, y;
     private HashMap<Direction, Edge> edges;
@@ -14,10 +19,21 @@ public class Vertex {
         edges = new HashMap<>();
     }
 
+    /**
+     * Adds an edge from a vertex in a specified direction
+     * @param edge - edge to be added
+     * @param direction - direction to be added in
+     */
     public void addEdge(Edge edge, Direction direction) {
         edges.put(direction, edge);
     }
 
+    /**
+     * Creates an edge from a vertex in a specified direction and
+     * with a specific state
+     * @param state - state of the edge
+     * @param direction - direction to be added in
+     */
     public void addEdge(MazeState state, Direction direction) {
         Edge edge = new Edge(this, null, state);
         addEdge(edge, direction);

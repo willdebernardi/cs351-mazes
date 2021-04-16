@@ -11,7 +11,16 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * An implementation of Prim's maze generation algorithm
+ * @author Christopher Medlin
+ */
 public class PrimsGenerator extends MazeGenerator{
+    /**
+     * Generates a new maze based upon the constraints of the algorithm
+     * @param size - size of the maze to be generated
+     * @return - the generated maze
+     */
     @Override
     public Maze makeMaze(int size) {
         List<Vertex> adjacents = new ArrayList<>();

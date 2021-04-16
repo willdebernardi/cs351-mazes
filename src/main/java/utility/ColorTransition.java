@@ -1,3 +1,8 @@
+package utility;
+
+import javafx.scene.paint.Color;
+import java.util.Random;
+
 /**
  * Transitions between 10 different colors by incrementing and decrementing RGB
  * values.
@@ -5,12 +10,6 @@
  * @author Christopher Medlin
  * @date 02/03/2021
  */
-package utility;
-
-import javafx.scene.paint.Color;
-
-import java.util.Random;
-
 public class ColorTransition {
     private final Color[] COLORS = {
             Color.PINK,

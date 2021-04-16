@@ -1,8 +1,3 @@
-/**
- * Generates a maze.
- *
- * @author Christopher Medlin, Will DeBernardi
- */
 package generators;
 
 import gui.Display;
@@ -12,6 +7,12 @@ import maze.MazeState;
 
 import java.util.function.Consumer;
 
+/**
+ * Abstract class which contains the basis for the logic of
+ * our maze generation.
+ *
+ * @author Christopher Medlin, Will DeBernardi
+ */
 public abstract class MazeGenerator {
     private Consumer<Maze> onGenerationComplete;
     private Display display;

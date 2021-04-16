@@ -1,5 +1,11 @@
 package maze;
 
+/**
+ * Edges connecting the vertices of the graph and stores a
+ * state relating to the maze (entrace, exit, wall, empty, etc.)
+ *
+ * @author Will DeBernardi, Christopher Medlin
+ */
 public class Edge {
     private Vertex start, end;
     private MazeState state;

@@ -1,3 +1,8 @@
+package gui;
+
+import javafx.scene.paint.Color;
+import maze.Vertex;
+
 /**
  * Interface for drawing to the GUI during maze generation and solving.
  *
@@ -8,11 +13,6 @@
  * @author Christopher Medlin, Will DeBernardi
  * @date 06 Apr 2021
  */
-package gui;
-
-import javafx.scene.paint.Color;
-import maze.Vertex;
-
 public abstract class Display {
 
     /**
@@ -39,12 +39,9 @@ public abstract class Display {
     public abstract void cellsChanged(Color color, Vertex... cells);
 
     /**
-     * Called by a maze solver when its location in the maze has changed.
-     *
-     * @param id a unique id corresponding to the maze solver. used in solving
-     *           algorithms that are multithreaded, such as random mouse, such
-     *           that each thread can be uniquely identified
-     * @param v the newly visited cell
+     * Updates the location of the solver on the GUI
+     * @param visited - cell currently being visited
+     * @param lastVisited - cell last visited
      */
     public abstract void updateSolver(Vertex visited, Vertex lastVisited);
 }

@@ -1,8 +1,3 @@
-/**
- * Solves a maze while updating a Display.
- *
- * @author Christopher Medlin, Will DeBernardi
- */
 package solvers;
 
 import gui.Display;
@@ -11,8 +6,12 @@ import maze.Direction;
 import maze.Maze;
 import maze.MazeState;
 import maze.Vertex;
-import utility.ColorTransition;
 
+/**
+ * Solves a maze while updating a Display.
+ *
+ * @author Christopher Medlin, Will DeBernardi
+ */
 public abstract class MazeSolver {
     private Display display;
     private Vertex lastVisited;

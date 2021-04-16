@@ -1,16 +1,18 @@
 package solvers;
 
 import gui.Display;
-import maze.MazeState;
 import maze.Vertex;
 
 import java.util.*;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.function.Predicate;
 
+/**
+ * Implementation of the random-mouse solving algorithm
+ * Can optionally be ran multi-threaded
+ *
+ * @author Christopher Medlin
+ */
 public class RandomMouseSolver extends MazeSolver {
     ExecutorService exec;
     Set<Vertex> visited;

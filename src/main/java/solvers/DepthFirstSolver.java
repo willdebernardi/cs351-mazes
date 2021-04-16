@@ -1,15 +1,18 @@
 package solvers;
 
 import gui.Display;
-import maze.Direction;
-import maze.Maze;
-import maze.MazeState;
 import maze.Vertex;
 
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+/**
+ * An implementation of a depth-first solver, simply created
+ * for testing purposes
+ *
+ * @author Christopher Medlin
+ */
 public class DepthFirstSolver extends MazeSolver {
     Stack<Vertex> stack;
     Set<Vertex> visited;

@@ -1,3 +1,19 @@
+package gui;
+
+import javafx.animation.AnimationTimer;
+import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.util.Pair;
+import maze.Direction;
+import maze.Settings;
+import maze.Vertex;
+import utility.ColorTransition;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
 /**
  * Main controller for the GUI.
  *
@@ -6,29 +22,6 @@
  *
  * @author Christopher Medlin, Will DeBernardi
  */
-package gui;
-
-import generators.DepthFirstGenerator;
-import generators.Kruskal;
-import generators.MazeGenerator;
-import javafx.animation.AnimationTimer;
-import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.util.Pair;
-import maze.Direction;
-import maze.Maze;
-import maze.Settings;
-import maze.Vertex;
-import solvers.DepthFirstSolver;
-import solvers.MazeSolver;
-import utility.ColorTransition;
-
-import java.util.Arrays;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-
 public class Controller extends Display {
     @FXML
     Canvas canvas;

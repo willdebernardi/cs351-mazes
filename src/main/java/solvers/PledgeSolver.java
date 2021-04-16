@@ -4,6 +4,11 @@ import maze.Direction;
 import maze.Edge;
 import maze.Vertex;
 
+/**
+ * An implementation of the pledge maze solver algorithm
+ *
+ * @author Christopher Medlin, Will DeBernardi
+ */
 public class PledgeSolver extends MazeSolver {
     @Override
     public void solveFrom(Vertex start, Vertex exit) {

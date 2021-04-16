@@ -1,10 +1,14 @@
 package maze;
 
-import java.rmi.server.RemoteObjectInvocationHandler;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
+/**
+ * Handles the creation of the Maze object, which is a connection of vertices
+ * as well as the entrance, exit, and logic for finding a specific cell
+ *
+ * @author Will DeBernardi, Christopher Medlin
+ */
 public class Maze {
     private ArrayList<Vertex> cells;
     private Vertex exit;
