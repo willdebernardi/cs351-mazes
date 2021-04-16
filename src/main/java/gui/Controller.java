@@ -23,6 +23,7 @@ import maze.Settings;
 import maze.Vertex;
 import solvers.DepthFirstSolver;
 import solvers.MazeSolver;
+import utility.ColorTransition;
 
 import java.util.Arrays;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -41,10 +42,13 @@ public class Controller extends Display {
     int fps;
     long lastDraw;
 
+    ColorTransition transition;
+
     public Controller() {
         fps = 60;
         lastDraw = 0;
         cellDrawingQueue = new ArrayBlockingQueue<>(2);
+        transition = new ColorTransition();
     }
 
     /**
@@ -80,7 +84,8 @@ public class Controller extends Display {
     @Override
     public synchronized void updateSolver(Vertex visited, Vertex lastVisited) {
         queueForDrawing(visited, Color.GREEN);
-        queueForDrawing(lastVisited, Color.LIGHTGREEN);
+        transition.transition();
+        queueForDrawing(lastVisited, transition.getColor());
     }
 
     private void queueForDrawing(Vertex v, Color c) {

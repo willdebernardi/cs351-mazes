@@ -11,6 +11,7 @@ import maze.Direction;
 import maze.Maze;
 import maze.MazeState;
 import maze.Vertex;
+import utility.ColorTransition;
 
 public abstract class MazeSolver {
     private Display display;
