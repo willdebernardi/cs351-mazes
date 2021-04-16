@@ -31,3 +31,13 @@ dependencies {
 application {
     mainClass = 'Main'
 }
+
+jar {
+    from sourceSets.main.allSource
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'Main'
+        )
+    }
+}
